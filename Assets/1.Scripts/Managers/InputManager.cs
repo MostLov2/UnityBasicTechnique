@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -7,8 +8,11 @@ public class InputManager : MonoBehaviour
     public Action<Define.MouseEvent> MouseAction = null;
 
     bool _pressed = false;
+
     public void OnUpdate()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         if(Input.anyKey && KeyAction != null) 
             KeyAction.Invoke();
         if (MouseAction != null)
