@@ -30,4 +30,9 @@ public class InputManager : MonoBehaviour
             }
         }
     }
+    public void Clear()
+    {
+        KeyAction = null;
+        MouseAction = null; 
+    }
 }
