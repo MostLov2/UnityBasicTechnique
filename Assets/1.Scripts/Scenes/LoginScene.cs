@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,17 @@ public class LoginScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.Login;
+
+        List<GameObject> list = new List<GameObject>();
+
+        for (int i = 0; i < 2; i++)
+        {
+            Managers.Resource.Instantiate("UnityChan");
+        }   
+        foreach(GameObject go in list)
+        {
+            Managers.Resource.Destroy(go);
+        }
     }
 
 
