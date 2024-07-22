@@ -3,12 +3,24 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    float _speed = 10.0f;
-
+    PlayerStat _stat;
     Vector3 _destPos;
 
+    Texture2D _handIcon;
+    Texture2D _attackIcon;
+
+    enum CursorType
+    {
+        None,
+        Attack,
+        Hand,
+    }
+    CursorType _cursorType = CursorType.None;
     void Start()
     {
+        _attackIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Attack");
+        _handIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Hand");
+        _stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
     }
@@ -17,7 +29,9 @@ public class PlayerController : MonoBehaviour
     {
         Die,
         Moving,
-        Idle
+        Idle,
+        Skill,
+
     }
     PlayerState _state = PlayerState.Idle;
 
@@ -35,13 +49,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            Debug.DrawRay(transform.position + Vector3.up * 0.5f, dir.normalized, Color.green);
             //1000
             NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
 
-            float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+            float moveDist = Mathf.Clamp(_stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
             nma.Move(dir.normalized * moveDist);
 
-            Debug.DrawRay(transform.position + Vector3.up * 0.5f, dir.normalized, Color.green);
             if (Physics.Raycast(transform.position, dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 _state = PlayerState.Idle;
@@ -56,7 +70,7 @@ public class PlayerController : MonoBehaviour
         //애니메이션 처리
         Animator anim = GetComponent<Animator>();
         //현재 게임 상태에 대한 정보를 넘겨준다
-        anim.SetFloat("speed", _speed);
+        anim.SetFloat("speed", _stat.MoveSpeed);
     }
     void UpdateIdle()
     {
@@ -66,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        UpDateMouseCursor();
         switch (_state)
         {
             case PlayerState.Die:
@@ -81,16 +96,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpDateMouseCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100.0f, _mask))
+        {
+            Debug.Log(hit.collider.gameObject.layer.ToString());
+            if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+            {
+                if (_cursorType != CursorType.Attack)
+                {
+                    Cursor.SetCursor(_attackIcon, new Vector2(_attackIcon.width / 5, 0), CursorMode.Auto);
+                    _cursorType = CursorType.Attack;
+                }
+            }
+            else
+            {
+                if (_cursorType != CursorType.Hand)
+                {
+                    Cursor.SetCursor(_handIcon, new Vector2(_handIcon.width / 3, 0), CursorMode.Auto);
+                    _cursorType = CursorType.Hand;
+
+                }
+            }
+        }
+    }
+
+    int _mask = (1 << (int)Define.Layer.Ground) | (1 << (int)Define.Layer.Monster);
     void OnMouseClicked(Define.MouseEvent evt)
     {
         if (_state == PlayerState.Die) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray,out hit, 100.0f, LayerMask.GetMask("Wall")))
+        if(Physics.Raycast(ray,out hit, 100.0f, _mask))
         {
             _destPos =  hit.point;
             _state = PlayerState.Moving;
+
+            if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+            {
+                Debug.Log("Monster Click!!");
+            }
+            else
+                Debug.Log("Monster Click!!");
         }
     }
 }
