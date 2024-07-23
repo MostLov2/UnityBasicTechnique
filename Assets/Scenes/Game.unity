@@ -4174,6 +4174,18 @@ MonoBehaviour:
   _moveSpeed: 0
   _exp: 0
   _gold: 0
+--- !u!114 &583444808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583444787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9b5fbc391a4b845aa69992b696cf3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &585785760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8632,6 +8644,10 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1324493448253424716, guid: 312b11e3b0578ad4882b772fd3bfd457, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1324493448260826826, guid: 312b11e3b0578ad4882b772fd3bfd457, type: 3}
       propertyPath: m_Name
       value: UnityChan
@@ -8686,6 +8702,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1324493448260826826, guid: 312b11e3b0578ad4882b772fd3bfd457, type: 3}
       insertIndex: -1
       addedObject: {fileID: 583444801}
+    - targetCorrespondingSourceObject: {fileID: 1324493448260826826, guid: 312b11e3b0578ad4882b772fd3bfd457, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 583444808}
   m_SourcePrefab: {fileID: 100100000, guid: 312b11e3b0578ad4882b772fd3bfd457, type: 3}
 --- !u!1001 &1106348985
 PrefabInstance:
