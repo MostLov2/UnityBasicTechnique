@@ -7,10 +7,6 @@ public class UI_Inven : UI_Scene
         Grid_Panel,
 
     }
-    private void Start()
-    {
-        Init();
-    }
 
     public override void Init()
     {
