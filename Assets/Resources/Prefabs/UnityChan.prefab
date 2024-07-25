@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnityChan
       objectReference: {fileID: 0}
+    - target: {fileID: 100326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -237,7 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e08dbc52e25d14eb3fed644c5fe5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destPos: {x: 0, y: 0, z: 0}
   _state: 2
+  _lockTarget: {fileID: 0}
 --- !u!54 &4177135310077672
 Rigidbody:
   m_ObjectHideFlags: 0
