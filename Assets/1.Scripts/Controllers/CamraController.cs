@@ -11,6 +11,11 @@ public class CamraController : MonoBehaviour
     [SerializeField]
     GameObject _player = null;
 
+    public void SetPlayer(GameObject player)
+    {
+        _player = player;
+    }
+
     void Start()
     {
 

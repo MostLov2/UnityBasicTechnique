@@ -95,7 +95,7 @@ public class MonsterController : BaseController
             if (targetStat.Hp > 0)
             {
                 float distance = (_lockTarget.transform.position - transform.position).magnitude;
-                if (distance >= _attackRange)
+                if (distance <= _attackRange)
                     State = Define.State.Skill;
                 else
                     State = Define.State.Moving;
